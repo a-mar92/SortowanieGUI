@@ -2,6 +2,5 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        DrawFrame drawFrame = new DrawFrame();
-
+       DrawFrame drawFrame = new DrawFrame();
     }}

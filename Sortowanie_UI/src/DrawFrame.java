@@ -6,13 +6,15 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class DrawFrame extends JFrame implements ActionListener {
-    ArrayList<Integer>numbers = new ArrayList<>();
-    JButton bExit, bSort;
-    JFrame myFrame;
-    JTextField imputNumbersTextArea;
-    JLabel numberInformation, sortedNumbers;
-    String inputedNumbersTextField;
-    String table [];
+    private ArrayList<Integer> numbers = new ArrayList<>();
+    private JButton bExit, bSort;
+    private JFrame myFrame;
+    private JTextField imputNumbersTextArea;
+    private JLabel numberInformation, sortedNumbers;
+    private String inputedNumbersTextField;
+    private String table[];
+    private JButton bReset;
+    private String[] numberStrings;
     public String getInputedNumbersTextField() {
         return inputedNumbersTextField;
     }
@@ -28,16 +30,19 @@ public class DrawFrame extends JFrame implements ActionListener {
         bSort = new JButton("Sort");
         myFrame = new JFrame();
         numberInformation = new JLabel("Enter value to sort");
-        sortedNumbers = new JLabel();
+        bReset = new JButton("Reset");
+        sortedNumbers = new JLabel("");
         setTitle("sortowanie");
-        setSize(400, 250);
-        imputNumbersTextArea = new JTextField("");
+        setSize(390, 220);
+        imputNumbersTextArea = new JTextField(null);
         setLayout(null);
-        bExit.setBounds(2, 150, 100, 20);
-        bSort.setBounds(250, 150, 100, 20);
+        bExit.setBounds(12, 120, 100, 20);
+        bReset.setBounds(132, 120, 100, 20);
+        bSort.setBounds(250, 120, 100, 20);
         imputNumbersTextArea.setBounds(122, 17, 150, 20);
         numberInformation.setBounds(2, 12, 150, 30);
-        sortedNumbers.setBounds(2, 50, 150, 30);
+        sortedNumbers.setBounds(2, 50, 350, 30);
+        add(bReset);
         add(bExit);
         add(bSort);
         add(imputNumbersTextArea);
@@ -45,6 +50,7 @@ public class DrawFrame extends JFrame implements ActionListener {
         add(sortedNumbers);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        bReset.addActionListener(this);
         bExit.addActionListener(this);
         bSort.addActionListener(this);
 
@@ -57,20 +63,32 @@ public class DrawFrame extends JFrame implements ActionListener {
             dispose();
         } else if (source == bSort) {
             inputedNumbersTextField = imputNumbersTextArea.getText();
-            sortedNumbers.setText(inputedNumbersTextField);
-           table = new String [inputedNumbersTextField.length()];
-           table=inputedNumbersTextField.split(", ");
-            for (String table:table) {
-                int number = Integer.parseInt(table.trim());
-                numbers.add(number);
-            }
-        }
-//
-//            Collections.sort(numbers);
-            System.out.println(numbers);
+            if (!inputedNumbersTextField.equals("")){
 
+                numberStrings = inputedNumbersTextField.split(",");
+
+                for (String numberString : numberStrings) {
+                    int number = Integer.parseInt(numberString.trim());
+                    numbers.add(number);
+                }
+                Collections.sort(numbers);
+                sortedNumbers.setText(String.valueOf(numbers));
+                numbers.removeAll(numbers);
+            }
+            else {
+                sortedNumbers.setText("enter Value");
+
+            }
+        } else if (source==bReset) {
+            numbers.removeAll(numbers);
+            imputNumbersTextArea.setText("");
+            sortedNumbers.setText("");
         }
+
+
+
     }
+}
 
 
 
