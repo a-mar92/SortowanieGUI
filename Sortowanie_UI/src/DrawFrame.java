@@ -15,15 +15,14 @@ public class DrawFrame extends JFrame implements ActionListener {
     private String table[];
     private JButton bReset;
     private String[] numberStrings;
+    int number;
     public String getInputedNumbersTextField() {
         return inputedNumbersTextField;
     }
 
-
     public DrawFrame() {
         startProgram();
     }
-
     private void startProgram() {
 
         bExit = new JButton("Exit");
@@ -55,7 +54,6 @@ public class DrawFrame extends JFrame implements ActionListener {
         bSort.addActionListener(this);
 
     }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -68,9 +66,13 @@ public class DrawFrame extends JFrame implements ActionListener {
                 numberStrings = inputedNumbersTextField.split(",");
 
                 for (String numberString : numberStrings) {
-                    int number = Integer.parseInt(numberString.trim());
+                    if (numberString.trim().isEmpty()){
+                     number = 0;
+                    }
+else{
+                    number = Integer.parseInt(numberString.trim());
                     numbers.add(number);
-                }
+                }}
                 Collections.sort(numbers);
                 sortedNumbers.setText(String.valueOf(numbers));
                 numbers.removeAll(numbers);
